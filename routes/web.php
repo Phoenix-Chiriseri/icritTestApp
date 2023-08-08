@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,4 @@ Route::post('/addPatient', [App\Http\Controllers\PatientController::class, 'stor
 Route::post('/postEntry', [App\Http\Controllers\DailyEntryController::class, 'store'])->name('storeEntry');
 Route::get('/viewDailyEntry', [App\Http\Controllers\DailyEntryController::class, 'index'])->name('viewEntry');
 Route::get('/viewAllEntries', [App\Http\Controllers\DailyEntryController::class, 'allEntries'])->name('allEntries');
+Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');

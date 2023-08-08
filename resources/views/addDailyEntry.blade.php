@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-8 offset-md-2" style="margin-top:100px;">
                 <div class="card">
                     <div class="card-header">Add Daily Entry</div>
                     <div class="card-body">
@@ -31,4 +32,4 @@
             </div>
         </div>
     </div>
-@endsection
+    @endsection

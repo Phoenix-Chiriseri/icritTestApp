@@ -6,6 +6,8 @@ use App\Models\DailyEntry;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class DailyEntryController extends Controller
 {
@@ -15,15 +17,44 @@ class DailyEntryController extends Controller
     public function index()
     {
         //
-        $patients = Patient::all();
+        //$users = Auth::user->house();
+        //$patients = Patient::all();
+        //$house = Auth::user()->house_id;
+        // Get patients belonging to the same house as the authenticated user
+        //$patients = Patient::where('house', $house)->get();
+        $houseId = Auth::user()->house;
+    // Get patients belonging to the same house as the authenticated user using a raw SQL query
+        $patients = DB::select('SELECT * FROM patients WHERE house = ?', [$houseId]);
+    // You can convert the results to a collection if needed
+        $patients = collect($patients);
         return view('addDailyEntry', compact('patients'));
     }
 
-    public function allEntries(){
 
-        $users = User::with('patients.dailyEntries')->get();
-        return view('allEntries', compact('users'));
-    }
+    public function allEntries(){
+    // Get the daily entries related to the user's house
+
+    // Get the daily entries related to the user's house
+    $userId = Auth::id();
+    $entries = DailyEntry::leftJoin('patients', 'daily_entries.patient_id', '=', 'patients.id')
+        ->leftJoin('users', 'patients.user_id', '=', 'users.id')
+        ->where('users.id', $userId)
+        ->select('users.name as user_name','users.house as house', 'patients.patient_name', 'daily_entries.date')
+        ->get();
+        //dd($entries);
+    return view('allEntries', compact('entries'));
+}
+    //public function allEntries(){
+
+      //  $user = auth()->user();
+        //$entries = DailyEntry::whereHas('patient.user', function ($query) use ($user) {
+          //  $query->where('house_id', $user->house_id);
+        //})->get();
+    
+        //return view('allEntries', compact('entries'));
+        //$users = User::with('patients.dailyEntries')->get();
+        //return view('allEntries', compact('users'));
+   // }
 
     /**
      * Show the form for creating a new resource.
