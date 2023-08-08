@@ -64,7 +64,12 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">House</label>
 
                             <div class="col-md-6">
-                                <input id="house" type="text" class="form-control" name="house" required autocomplete="new-password">
+                            <h5 class = "text-center">Select A House</h5>
+                            <br>
+                            <select name="house" class = "form-control">
+                                <option value="hearten">Hearten</option>
+                                <option value="lorraine">Lorraine</option>
+                                </select>
                             </div>
                         </div>
 
