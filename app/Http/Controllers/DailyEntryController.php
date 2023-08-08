@@ -17,11 +17,6 @@ class DailyEntryController extends Controller
     public function index()
     {
         //
-        //$users = Auth::user->house();
-        //$patients = Patient::all();
-        //$house = Auth::user()->house_id;
-        // Get patients belonging to the same house as the authenticated user
-        //$patients = Patient::where('house', $house)->get();
         $houseId = Auth::user()->house;
     // Get patients belonging to the same house as the authenticated user using a raw SQL query
         $patients = DB::select('SELECT * FROM patients WHERE house = ?', [$houseId]);
@@ -43,6 +38,30 @@ class DailyEntryController extends Controller
         ->get();
         //dd($entries);
     return view('allEntries', compact('entries'));
+}
+
+public function myEntries(){
+
+    $userId = Auth::id();
+    // Get daily entries associated with the logged-in user
+    // Define the raw SQL query
+    $query = "
+        SELECT users.name as user_name, users.house as house, patients.patient_name, daily_entries.date
+        FROM daily_entries
+        LEFT JOIN patients ON daily_entries.patient_id = patients.id
+        LEFT JOIN users ON patients.user_id = users.id
+        WHERE EXISTS (
+            SELECT 1
+            FROM patients AS p
+            WHERE p.user_id = :userId
+            AND p.id = daily_entries.patient_id
+        )
+    ";
+
+    // Execute the raw SQL query with the user ID parameter
+    $entries = DB::select($query, ['userId' => $userId]);
+
+    return view('myEntries', compact('entries'));
 }
     //public function allEntries(){
 

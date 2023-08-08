@@ -16,12 +16,16 @@
                                 <label for="name">Name</label>
                                 <input type="text" name="name" id="name" class="form-control" required>
                             </div>
-
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label for="house">House</label>
                                 <input type="text" name="house" id="house" class="form-control" required>
-                            </div>
-
+                            </div>!-->
+                            <h5 class = "text-center">Select A House</h5>
+                            <br>
+                            <select name="house" class = "form-control">
+                                <option value="hearten">Hearten</option>
+                                <option value="lorraine">Lorraine</option>
+                                </select>
                             {{-- Dropdown to select the associated user --}}
                             <div class="form-group">
                                 <label for="user_id">Associated User</label>
@@ -38,6 +42,10 @@
                             <br>
                             <div class="form-group">
                                 <a href="/viewDailyEntry" class="btn btn-secondary">Add Daily Entry</a>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <a href="/viewMyEntries" class="btn btn-danger">View My Entries</a>
                             </div>
                             <br>
                             <div class="form-group">
